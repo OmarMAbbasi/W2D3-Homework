@@ -19,7 +19,7 @@ describe Dessert do
     it "sets a quantity" do
       expect(cheesecake.quantity).to eq(5)
     end
-
+  end
     it "starts ingredients as an empty array" do
       expect(cheesecake.ingredients).to be_empty
     end
@@ -30,10 +30,9 @@ describe Dessert do
   end
     
   describe "#add_ingredient" do
-    it "adds an ingredient to the ingredients array"
-      expect{cupcake.add_ingredient("Cream Cheese")} to 
-
-    end
+    # it "adds an ingredient to the ingredients array" do
+    #   expect{cupcake.add_ingredient("Cream Cheese")} to 
+    # end
 
   describe "#mix!" do
     it "shuffles the ingredient array"
