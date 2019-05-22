@@ -30,17 +30,32 @@ describe Dessert do
   end
     
   describe "#add_ingredient" do
-    # it "adds an ingredient to the ingredients array" do
-    #   expect{cupcake.add_ingredient("Cream Cheese")} to 
-    # end
-
+  
+    it "adds an ingredient to the ingredients array" do
+      expect(cheesecake.ingredients[0]).to eq("Cream Cheese")
+    end
+  
   describe "#mix!" do
-    it "shuffles the ingredient array"
+    before(:each) do
+      cheesecake.add_ingredient("Milk")
+      cheesecake.add_ingredient("Butter")
+      cheesecake.add_ingredient("Cream Cheese")
+      unshuffled = cheesecake.ingredients.dup
+      unshuffled << "Strawberries"
+      cheesecake.add_ingredient("Strawberries").mix!
+    end
+    it "shuffles the ingredient array" do
+      expect(cheesecake.ingredients).to_not eq(unshuffled)
+    end
     
     end
 
   describe "#eat" do
-    it "subtracts an amount from the quantity"
+    it "subtracts an amount from the quantity" do 
+
+    end
+    
+      
     
 
     it "raises an error if the amount is greater than the quantity"
