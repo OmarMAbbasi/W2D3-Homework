@@ -8,7 +8,7 @@ Instructions: implement all of the pending specs (the `it` statements without bl
 
 describe Dessert do
   
-  let(:chef) { double("chef") }
+  let(:chef) { double("chef", :name => "Ryan") }
   subject(:cheesecake) {Dessert.new("cheesecake", 5, chef)}
   
   describe "#initialize" do
@@ -19,7 +19,7 @@ describe Dessert do
     it "sets a quantity" do
       expect(cheesecake.quantity).to eq(5)
     end
-  end
+
     it "starts ingredients as an empty array" do
       expect(cheesecake.ingredients).to be_empty
     end
@@ -30,42 +30,62 @@ describe Dessert do
   end
     
   describe "#add_ingredient" do
+    before(:each) do
+      cheesecake.add_ingredient("Cream Cheese")
+    end
   
     it "adds an ingredient to the ingredients array" do
       expect(cheesecake.ingredients[0]).to eq("Cream Cheese")
     end
+  end
   
   describe "#mix!" do
+  let(:unshuffled) {["Milk", "Butter", "Cream Cheese", "Strawberries"]}
     before(:each) do
       cheesecake.add_ingredient("Milk")
       cheesecake.add_ingredient("Butter")
       cheesecake.add_ingredient("Cream Cheese")
       unshuffled = cheesecake.ingredients.dup
       unshuffled << "Strawberries"
-      cheesecake.add_ingredient("Strawberries").mix!
+      cheesecake.add_ingredient("Strawberries")
     end
     it "shuffles the ingredient array" do
-      expect(cheesecake.ingredients).to_not eq(unshuffled)
+      expect(cheesecake.mix!).to_not eq(unshuffled)
     end
-    
-    end
+  end
 
   describe "#eat" do
+  before(:each) do 
+    cheesecake.eat(2)
+  end
     it "subtracts an amount from the quantity" do 
+      expect(cheesecake.quantity).to eq(3)
 
+    end 
+
+    it "raises an error if the amount is greater than the quantity" do
+      expect do 
+        cheesecake.eat(10)
+      end.to raise_error("not enough left!")
     end
-    
-      
-    
-
-    it "raises an error if the amount is greater than the quantity"
   end
 
   describe "#serve" do
-    it "contains the titleized version of the chef's name"
-  end
+  it "contains the titleized version of the chef's name" do 
+      expect(chef).to receive(:titleize)
+      cheesecake.serve
+      end
+    end
 
   describe "#make_more" do
-    it "calls bake on the dessert's chef with the dessert passed in"
+  it "calls bake on the dessert's chef with the dessert passed in" do
+    expect(chef).to receive(:bake).with(cheesecake).and_return(:heat!)
+    cheesecake.make_more
+  end
+
+
+
+
+
   end
 end
